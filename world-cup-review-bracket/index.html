@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Cup 2026 Bracket Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Drag, drop, argue, repeat</p>
+        <h1>World Cup 2026 Bracket Builder</h1>
+        <p class="hero-copy">
+          Move flags through the knockout rounds and map your own route to the trophy.
+        </p>
+
+        <div class="toolbar" aria-label="Bracket controls">
+          <button class="control-button" id="clearProgressButton" type="button">Clear progress</button>
+          <button class="control-button" id="resetButton" type="button">Reset all</button>
+          <button
+            class="control-button primary"
+            id="modalToggleButton"
+            type="button"
+            aria-controls="teamModal"
+            aria-expanded="false"
+          >
+            Teams & selection
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="bracket-card" aria-label="Interactive World Cup bracket">
+          <div class="bracket-shell" id="bracketShell">
+            <svg
+              class="bracket-lines"
+              id="bracketLines"
+              viewBox="0 0 1100 1100"
+              role="img"
+              aria-label="Circular bracket connector lines"
+            ></svg>
+            <div class="bracket-slots" id="bracketSlots"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <aside
+      class="modal"
+      id="teamModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="teamModalTitle"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-card" role="document">
+        <div class="modal-header">
+          <div>
+            <p class="modal-eyebrow">Bracket tools</p>
+            <h2 id="teamModalTitle">Teams & selection</h2>
+          </div>
+          <button class="modal-close" id="modalCloseButton" type="button" aria-label="Close teams modal">×</button>
+        </div>
+
+        <section class="panel-section selected-panel" aria-live="polite">
+          <h3>Selected team</h3>
+          <div id="selectedTeam" class="selected-team empty">No team selected</div>
+        </section>
+
+        <section class="panel-section">
+          <h3>Team pool</h3>
+          <p class="small-note">Pick a team here, then click a bracket slot to place it.</p>
+          <div class="team-pool" id="teamPool"></div>
+        </section>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
