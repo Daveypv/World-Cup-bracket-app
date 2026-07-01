@@ -1,6 +1,6 @@
 const BOARD_SIZE = 1100;
 const CENTER = BOARD_SIZE / 2;
-const TOTAL_TEAMS = 32;
+const TOTAL_TEAMS = 31;
 const STORAGE_KEY = 'worldCupBracketBuilder:v1';
 
 const TEAMS = [
@@ -13,7 +13,7 @@ const TEAMS = [
   { id: 'nor', code: 'NOR', name: 'Norway', flag: '🇳🇴' },
   { id: 'mex', code: 'MEX', name: 'Mexico', flag: '🇲🇽' },
   { id: 'ecu', code: 'ECU', name: 'Ecuador', flag: '🇪🇨' },
-  { id: 'eng', code: 'ENG', name: 'England', flag: '🇬🇧' },
+  { id: 'eng', code: 'ENG', name: 'England', flag: '🏴' },
   { id: 'cod', code: 'COD', name: 'DR Congo', flag: '🇨🇩' },
   { id: 'arg', code: 'ARG', name: 'Argentina', flag: '🇦🇷' },
   { id: 'cpv', code: 'CPV', name: 'Cape Verde', flag: '🇨🇻' },
@@ -90,7 +90,7 @@ function loadState() {
       return initialState;
     }
 
-    return normalizeSavedState(JSON.parse(savedState), initialState);
+    return JSON.parse(savedState);
   } catch (error) {
     console.warn('Could not load saved bracket state.', error);
     return initialState;
@@ -466,7 +466,6 @@ function clearSlot(slotId) {
 
   state[slotId] = null;
   selected = null;
-  saveState();
   render();
 }
 
@@ -485,9 +484,7 @@ function clearProgress() {
   Object.keys(state).forEach((slotId) => {
     const { roundKey } = parseSlotId(slotId);
 
-    if (roundKey !== 'round32') {
-      state[slotId] = null;
-    }
+    state[slotId] = null;
   });
 
   selected = null;
@@ -499,7 +496,6 @@ function clearProgress() {
 function resetAll() {
   state = createInitialState();
   selected = null;
-  saveState();
   render();
   showToast('Bracket reset. Chaos cancelled.');
 }
@@ -527,7 +523,7 @@ function toggleTeamModal() {
 }
 
 function handleDocumentKeydown(event) {
-  if (event.key === 'Escape' && !teamModal.hidden) {
+  if (event.key === 'Enter' && !teamModal.hidden) {
     closeTeamModal();
   }
 }
